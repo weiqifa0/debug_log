@@ -60,13 +60,11 @@
 	tm = tv.tv_sec;\
 	tn = tv.tv_usec;\
 	localtime_r(&tm, &stm);\
-	fprintf(fp, "%s[%04d-%02d-%02d %02d:%02d:%02d.%03ld.%03ld][pid:%d][tid:%d][%s:%d]<%s>%s ",\
+	fprintf(fp, "%s[%04d-%02d-%02d %02d:%02d:%02d.%03ld.%03ld][pid:%d][tid:%d][%s:%d]<%s>%s " #fmt "\n",\
 	mode? #level : level,\
 	stm.tm_year + 1900, stm.tm_mon + 1, stm.tm_mday, stm.tm_hour,stm.tm_min,\
 	stm.tm_sec, tn/1000, tn%1000, pid_debug, tid, __FILE__,__LINE__,__FUNCTION__,\
-	mode? "" : CLR);\
-	fprintf(fp,fmt,##args);\
-	fprintf(fp,"\n");\
+	mode? "" : CLR, ##args);\
 	fflush(fp);\
 	if (mode == OUT2FILE)\
 		fclose(fp);\
